@@ -1,0 +1,113 @@
+.boot {
+  position: fixed;
+  inset: 0;
+  z-index: var(--z-preloader);
+  display: grid;
+  place-items: center;
+  background: var(--void);
+  transition: opacity 600ms var(--ease-out), visibility 600ms;
+
+  &.is-leaving {
+    opacity: 0;
+    visibility: hidden;
+  }
+}
+
+.boot__inner {
+  width: min(420px, calc(100vw - 3rem));
+  display: flex;
+  flex-direction: column;
+  gap: 1.6rem;
+}
+
+.boot__mark {
+  position: relative;
+  align-self: flex-start;
+  display: grid;
+  place-items: center;
+  width: 76px;
+  height: 76px;
+  margin-bottom: 0.4rem;
+}
+
+.boot__initials {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 1.9rem;
+  letter-spacing: -0.05em;
+  color: var(--bone);
+}
+
+.boot__log {
+  display: flex;
+  flex-direction: column;
+  gap: 0.42rem;
+  font-family: var(--font-mono);
+  font-size: var(--t-xs);
+  color: var(--mute-2);
+
+  li {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    transition: color var(--dur-fast) var(--ease-out);
+  }
+
+  li.is-done { color: var(--mute); }
+
+  li.is-active {
+    color: var(--signal);
+    .boot__state { animation: bootBlink 900ms steps(1) infinite; }
+  }
+}
+
+.boot__caret { width: 1ch; color: inherit; }
+.boot__label { white-space: nowrap; }
+
+.boot__dots {
+  flex: 1;
+  height: 1px;
+  border-bottom: 1px dashed var(--hair);
+  transform: translateY(-2px);
+}
+
+.boot__state {
+  min-width: 2.4ch;
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+.boot__bar {
+  height: 2px;
+  background: var(--hair);
+  overflow: hidden;
+}
+
+.boot__fill {
+  height: 100%;
+  background: var(--signal);
+  transform-origin: left;
+  transform: scaleX(0);
+  transition: transform 120ms linear;
+  box-shadow: 0 0 12px var(--signal);
+}
+
+.boot__pct {
+  display: flex;
+  justify-content: space-between;
+  font-family: var(--font-mono);
+  font-size: var(--t-micro);
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--mute);
+
+  span:last-child {
+    color: var(--bone);
+    font-variant-numeric: tabular-nums;
+  }
+}
+
+@keyframes bootBlink {
+  0%, 50% { opacity: 1; }
+  51%, 100% { opacity: 0.25; }
+}
