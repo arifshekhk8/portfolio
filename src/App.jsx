@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useState } from 'react'
 import Experience from './components/canvas/Experience.jsx'
 import Preloader from './components/ui/Preloader.jsx'
+import Nav from './components/ui/Nav.jsx'
 import Hero from './sections/Hero.jsx'
 import useScrollProgress from './hooks/useScrollProgress.js'
 import usePointer from './hooks/usePointer.js'
@@ -32,6 +33,7 @@ export default function App() {
 
       <div className={`shell${booted ? ' is-booted' : ''}`}>
         <a className="skip-link" href="#main">Skip to content</a>
+        <Nav scrollRef={scrollRef} />
         <main id="main">
           <Hero />
         </main>

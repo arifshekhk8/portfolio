@@ -1,0 +1,207 @@
+.nav {
+  position: fixed;
+  inset-inline: 0;
+  top: 0;
+  z-index: var(--z-nav);
+  transition: background var(--dur) var(--ease-out), border-color var(--dur) var(--ease-out);
+  border-bottom: 1px solid transparent;
+
+  &.is-stuck {
+    background: rgba(5, 7, 11, 0.72);
+    backdrop-filter: blur(14px) saturate(140%);
+    -webkit-backdrop-filter: blur(14px) saturate(140%);
+    border-bottom-color: var(--hair);
+  }
+}
+
+.nav__inner {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  height: 68px;
+}
+
+/* ---- mark ---- */
+.nav__mark {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.7rem;
+  margin-right: auto;
+}
+
+.nav__mark-box {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 0.86rem;
+  letter-spacing: -0.03em;
+  color: var(--bone);
+
+  .det__corner {
+    width: 8px;
+    height: 8px;
+    opacity: 0.85;
+  }
+}
+
+.nav__mark:hover .det__corner {
+  width: 12px;
+  height: 12px;
+}
+
+.nav__mark-text {
+  color: var(--mute);
+  transition: color var(--dur-fast);
+}
+
+.nav__mark:hover .nav__mark-text { color: var(--bone); }
+
+/* ---- links ---- */
+.nav__links {
+  display: flex;
+  gap: 0.25rem;
+}
+
+.nav__link {
+  position: relative;
+  display: inline-flex;
+  align-items: baseline;
+  gap: 0.42em;
+  padding: 0.5em 0.75em;
+  color: var(--mute);
+  transition: color var(--dur-fast) var(--ease-out);
+
+  &::after {
+    content: '';
+    position: absolute;
+    left: 0.75em;
+    right: 0.75em;
+    bottom: 0.15em;
+    height: 1px;
+    background: var(--signal);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform var(--dur) var(--ease-out);
+  }
+
+  &:hover { color: var(--bone); }
+
+  &.is-active {
+    color: var(--signal);
+    &::after { transform: scaleX(1); }
+  }
+}
+
+.nav__link-idx {
+  font-size: 0.58rem;
+  color: var(--mute-2);
+  transition: color var(--dur-fast);
+}
+
+.nav__link.is-active .nav__link-idx { color: var(--signal-deep); }
+
+/* ---- availability pill ---- */
+.nav__hire {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5em;
+  padding: 0.5em 0.85em;
+  border: 1px solid var(--hair-signal);
+  color: var(--signal);
+  background: var(--signal-glow);
+  transition: background var(--dur-fast), color var(--dur-fast);
+
+  &:hover {
+    background: var(--signal);
+    color: var(--void);
+  }
+}
+
+.nav__hire-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: currentColor;
+  animation: heroPulse 2.4s var(--ease-out) infinite;
+}
+
+/* ---- scroll progress ---- */
+.nav__progress {
+  height: 1px;
+  background: transparent;
+
+  span {
+    display: block;
+    height: 100%;
+    background: var(--signal);
+    transform-origin: left;
+    transform: scaleX(0);
+    box-shadow: 0 0 8px var(--signal-glow);
+  }
+}
+
+/* ---- mobile ---- */
+.nav__burger {
+  display: none;
+  color: var(--bone);
+  padding: 0.35rem;
+}
+
+.sheet {
+  position: fixed;
+  inset: 0;
+  z-index: 55;
+  display: grid;
+  place-items: center;
+  background: rgba(5, 7, 11, 0.97);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  opacity: 0;
+  transition: opacity var(--dur) var(--ease-out);
+
+  &.is-open { opacity: 1; }
+  &[hidden] { display: none; }
+}
+
+.sheet__links {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  text-align: left;
+
+  a {
+    display: flex;
+    align-items: baseline;
+    gap: 1rem;
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: clamp(2rem, 9vw, 3rem);
+    letter-spacing: -0.035em;
+    color: var(--bone);
+    opacity: 0;
+    transform: translateY(14px);
+    transition: opacity var(--dur) var(--ease-out), transform var(--dur) var(--ease-out);
+
+    span {
+      font-size: 0.7rem;
+      color: var(--mute-2);
+    }
+
+    &.is-active { color: var(--signal); }
+  }
+}
+
+.sheet.is-open .sheet__links a {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+@media (max-width: 980px) {
+  .nav__links { display: none; }
+  .nav__hire { display: none; }
+  .nav__burger { display: inline-flex; }
+}
