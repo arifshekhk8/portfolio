@@ -10,6 +10,7 @@ export default function Hero() {
 
   return (
     <section className="hero" id="top">
+      <div className="scrim" aria-hidden="true" />
       <div className="wrap hero__grid">
         <p className="hero__eyebrow mono">
           <span className="hero__pulse" aria-hidden="true" />

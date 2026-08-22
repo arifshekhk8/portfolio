@@ -58,7 +58,7 @@ const vertexShader = /* glsl */ `
 
     gl_Position = projectionMatrix * mv;
     gl_PointSize = uSize * aScale * uPixelRatio * (26.0 / max(dist, 0.6));
-    gl_PointSize *= 1.0 + vPulse * 1.6;
+    gl_PointSize *= 1.0 + vPulse * 1.3;
   }
 `
 
@@ -82,7 +82,7 @@ const fragmentShader = /* glsl */ `
 
     vec3 col = mix(uColorA, uColorB, vLayer);
     col = mix(col, vec3(1.0), vPulse * 0.55);
-    col += core * 0.18;
+    col += core * 0.12;
 
     gl_FragColor = vec4(col, alpha);
   }
@@ -138,7 +138,7 @@ export default function NeuralField({ count = 9000, scrollRef, pointerRef }) {
       uPixelRatio: { value: Math.min(window.devicePixelRatio || 1, 2) },
       uColorA: { value: new THREE.Color('#4fe3b0') },
       uColorB: { value: new THREE.Color('#f0a83c') },
-      uOpacity: { value: 0.9 },
+      uOpacity: { value: 0.7 },
     }),
     [],
   )

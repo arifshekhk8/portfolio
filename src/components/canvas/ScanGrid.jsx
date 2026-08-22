@@ -42,18 +42,19 @@ const fragmentShader = /* glsl */ `
     vec2 uv = vUv;
     uv.y += uScroll * 3.2;
 
-    float fine = gridLine(uv, 90.0, 1.4) * 0.32;
-    float coarse = gridLine(uv, 15.0, 1.8) * 0.7;
+    float fine = gridLine(uv, 90.0, 1.4) * 0.22;
+    float coarse = gridLine(uv, 15.0, 1.8) * 0.5;
     float g = max(fine, coarse);
 
     // Scan line sweeping along the plane.
     float sweep = fract(uv.y * 1.0 - uTime * 0.09);
     float scan = smoothstep(0.0, 0.02, sweep) * smoothstep(0.10, 0.02, sweep);
 
-    // Fade out near the horizon and at the edges so it never shows a seam.
-    float horizon = smoothstep(1.0, 0.25, vUv.y);
+    // Fade out well before the horizon, otherwise the far edge of the plane
+    // lands on the eye line as a hard bright seam.
+    float horizon = smoothstep(0.82, 0.10, vUv.y);
     float edge = smoothstep(0.0, 0.16, vUv.x) * smoothstep(1.0, 0.84, vUv.x);
-    float depth = smoothstep(220.0, 8.0, vDist);
+    float depth = smoothstep(170.0, 10.0, vDist);
 
     vec3 col = mix(uColor, uScanColor, scan * 0.85);
     float a = (g * 0.9 + scan * 0.35) * horizon * edge * depth * uOpacity;

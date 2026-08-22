@@ -54,10 +54,10 @@ export default function Experience({ tier = 'high', scrollRef, pointerRef }) {
       <Suspense fallback={null}>
         <CameraRig scrollRef={scrollRef} pointerRef={pointerRef} />
         <NeuralField count={cfg.particles} scrollRef={scrollRef} pointerRef={pointerRef} />
-        <ScanGrid scrollRef={scrollRef} opacity={tier === 'high' ? 0.55 : 0.34} />
+        <ScanGrid scrollRef={scrollRef} opacity={tier === 'high' ? 0.52 : 0.3} />
         {cfg.bloom && (
           <EffectComposer enableNormalPass={false}>
-            <Bloom intensity={0.72} luminanceThreshold={0.22} luminanceSmoothing={0.5} mipmapBlur />
+            <Bloom intensity={0.5} luminanceThreshold={0.3} luminanceSmoothing={0.5} mipmapBlur />
             <Vignette eskil={false} offset={0.22} darkness={0.72} />
           </EffectComposer>
         )}
