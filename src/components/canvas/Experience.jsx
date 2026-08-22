@@ -34,7 +34,7 @@ function CameraRig({ scrollRef, pointerRef }) {
 
 export default function Experience({ tier = 'high', scrollRef, pointerRef }) {
   const cfg = tierSettings[tier] ?? tierSettings.mid
-  const [visible, setVisible] = useState(true)
+  const [visible, setVisible] = useState(() => !document.hidden)
 
   // Stop rendering entirely while the tab is in the background.
   useEffect(() => {

@@ -1,4 +1,4 @@
-import { lazy, Suspense, useCallback, useEffect, useState } from 'react'
+import { lazy, Suspense, useCallback, useState } from 'react'
 import Preloader from './components/ui/Preloader.jsx'
 import Nav from './components/ui/Nav.jsx'
 import Cursor from './components/ui/Cursor.jsx'
@@ -19,14 +19,12 @@ import { detectTier, prefersReducedMotion } from './utils/device.js'
 const Experience = lazy(() => import('./components/canvas/Experience.jsx'))
 
 export default function App() {
-  const [tier, setTier] = useState('mid')
-  const [booted, setBooted] = useState(() => prefersReducedMotion())
+  // Probed once during the first render. Doing this in an effect would
+  // mount the wrong tier and immediately re-render.
+  const [tier] = useState(detectTier)
+  const [booted, setBooted] = useState(prefersReducedMotion)
   const scrollRef = useScrollProgress()
   const pointerRef = usePointer()
-
-  useEffect(() => {
-    setTier(detectTier())
-  }, [])
 
   const onBooted = useCallback(() => setBooted(true), [])
 

@@ -88,11 +88,27 @@ const fragmentShader = /* glsl */ `
   }
 `
 
+/**
+ * Deterministic PRNG (mulberry32). Math.random would reshuffle the entire
+ * cloud on any re-render, and the same seed means the scene looks identical
+ * on every visit rather than subtly different each load.
+ */
+function makeRandom(seed) {
+  let a = seed >>> 0
+  return () => {
+    a = (a + 0x6d2b79f5) >>> 0
+    let t = Math.imul(a ^ (a >>> 15), 1 | a)
+    t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t
+    return ((t ^ (t >>> 14)) >>> 0) / 4294967296
+  }
+}
+
 export default function NeuralField({ count = 9000, scrollRef, pointerRef }) {
   const matRef = useRef()
   const smoothed = useRef({ x: 0, y: 0, scroll: 0 })
 
   const geometry = useMemo(() => {
+    const rand = makeRandom(0x5eed_a71f)
     const g = new THREE.BufferGeometry()
     const positions = new Float32Array(count * 3)
     const seeds = new Float32Array(count)
@@ -103,23 +119,23 @@ export default function NeuralField({ count = 9000, scrollRef, pointerRef }) {
     for (let i = 0; i < count; i += 1) {
       // Two thirds snap to a layer plane, the rest fill the space between.
       const planed = i % 3 !== 0
-      const plane = Math.floor(Math.random() * PLANES)
+      const plane = Math.floor(rand() * PLANES)
       const zPlane = -40 + (plane / (PLANES - 1)) * 80
 
-      const z = planed ? zPlane + (Math.random() - 0.5) * 2.4 : -40 + Math.random() * 80
+      const z = planed ? zPlane + (rand() - 0.5) * 2.4 : -40 + rand() * 80
 
       // Radial spread widens with distance so the field feels like a tunnel.
       const spread = 9 + Math.abs(z) * 0.34
-      const angle = Math.random() * Math.PI * 2
-      const radius = Math.sqrt(Math.random()) * spread
+      const angle = rand() * Math.PI * 2
+      const radius = Math.sqrt(rand()) * spread
 
       positions[i * 3 + 0] = Math.cos(angle) * radius
       positions[i * 3 + 1] = Math.sin(angle) * radius * 0.62
       positions[i * 3 + 2] = z
 
-      seeds[i] = Math.random()
-      layers[i] = planed ? plane / (PLANES - 1) : Math.random()
-      scales[i] = 0.55 + Math.random() * Math.random() * 1.9
+      seeds[i] = rand()
+      layers[i] = planed ? plane / (PLANES - 1) : rand()
+      scales[i] = 0.55 + rand() * rand() * 1.9
     }
 
     g.setAttribute('position', new THREE.BufferAttribute(positions, 3))

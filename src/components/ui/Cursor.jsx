@@ -11,12 +11,12 @@ const HOVERABLE = 'a, button, input, textarea, [role="button"], .card, .certs__c
 export default function Cursor() {
   const dotRef = useRef(null)
   const ringRef = useRef(null)
-  const [enabled, setEnabled] = useState(false)
+  const [enabled] = useState(
+    () => window.matchMedia('(pointer: fine)').matches && !prefersReducedMotion(),
+  )
 
   useEffect(() => {
-    const fine = window.matchMedia('(pointer: fine)').matches
-    if (!fine || prefersReducedMotion()) return
-    setEnabled(true)
+    if (!enabled) return
 
     const dot = dotRef.current
     const ring = ringRef.current
@@ -85,7 +85,7 @@ export default function Cursor() {
       document.removeEventListener('mouseenter', onEnter)
       cancelAnimationFrame(raf)
     }
-  }, [])
+  }, [enabled])
 
   if (!enabled) return null
 

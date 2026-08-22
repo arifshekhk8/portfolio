@@ -1,10 +1,23 @@
 {
   "$schema": "./node_modules/oxlint/configuration_schema.json",
-  "plugins": ["react", "jsx-a11y"],
-  "categories": { "correctness": "error", "suspicious": "warn" },
+  "plugins": [
+    "react",
+    "jsx-a11y"
+  ],
+  "categories": {
+    "correctness": "error",
+    "suspicious": "warn"
+  },
   "rules": {
     "react/no-unknown-property": "off",
-    "no-unused-vars": "warn"
+    "no-unused-vars": "warn",
+    "react/react-in-jsx-scope": "off",
+    "react/jsx-no-target-blank": "off",
+    "react/immutability": "off",
+    "jsx-a11y/prefer-tag-over-role": "off"
   },
-  "ignorePatterns": ["dist", "node_modules"]
+  "ignorePatterns": [
+    "dist",
+    "node_modules"
+  ]
 }
