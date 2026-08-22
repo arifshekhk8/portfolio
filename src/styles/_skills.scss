@@ -1,12 +1,17 @@
 .skills { isolation: isolate; }
 
+/* Six columns so five banks tile exactly: three across, then two wider
+   ones. auto-fit left the last bank stranded beside a hole. */
 .skills__grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  grid-template-columns: repeat(6, 1fr);
   gap: 1px;
   background: var(--hair);
   border: 1px solid var(--hair);
 }
+
+.bank { grid-column: span 2; }
+.bank:nth-last-child(-n + 2) { grid-column: span 3; }
 
 .bank {
   display: flex;
@@ -19,11 +24,11 @@
   &:hover { background: rgba(13, 20, 32, 0.9); }
 }
 
+/* Title over note. Side by side, long labels like "Computer vision" and
+   "so the model can be called" both wrapped and collided. */
 .bank__head {
-  display: flex;
-  align-items: baseline;
-  justify-content: space-between;
-  gap: 1rem;
+  display: grid;
+  gap: 0.12rem;
   padding-bottom: 0.85rem;
   border-bottom: 1px solid var(--hair);
 }
@@ -82,20 +87,44 @@
   }
 }
 
-/* Segments only light once the group has been revealed. */
-[data-reveal-child].is-in .gauge__meter i.is-lit {
+.gauge__meter i.is-lit {
   background: var(--signal);
   transform: scaleY(1);
+}
+
+/* Segments start dark and light in sequence when the bank is revealed.
+   Scoped so that a bank which never reveals still shows its true level
+   rather than an empty meter. */
+.reveal-ready .bank:not(.is-in) .gauge__meter i.is-lit {
+  background: var(--void-4);
+  transform: scaleY(0.45);
 }
 
 .bank:hover .gauge__meter i.is-lit {
   box-shadow: 0 0 6px var(--signal-glow);
 }
 
-/* Every fifth segment stays dim so the meter reads like a scale. */
+/* Every fifth segment sits a shade back so the meter reads like a scale. */
 .gauge__meter i:nth-child(5n).is-lit { background: var(--signal-deep); }
+.reveal-ready .bank:not(.is-in) .gauge__meter i:nth-child(5n).is-lit {
+  background: var(--void-4);
+}
 
 /* ---- tail ---- */
+@media (max-width: 1180px) {
+  .skills__grid { grid-template-columns: repeat(2, 1fr); }
+  .bank,
+  .bank:nth-last-child(-n + 2) { grid-column: span 1; }
+  .bank:last-child:nth-child(odd) { grid-column: span 2; }
+}
+
+@media (max-width: 640px) {
+  .skills__grid { grid-template-columns: 1fr; }
+  .bank,
+  .bank:nth-last-child(-n + 2),
+  .bank:last-child:nth-child(odd) { grid-column: span 1; }
+}
+
 .skills__tail {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));

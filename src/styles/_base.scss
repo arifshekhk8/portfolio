@@ -116,10 +116,11 @@ body.is-locked { overflow: hidden; }
 }
 
 /* -------------------------------------------------------------------------
-   Reveal on scroll. Sections start slightly low and faded; useReveal adds
-   .is-in once they cross into view and staggers any [data-reveal-child].
+   Reveal on scroll. Scoped to .reveal-ready, which React adds to <html> once
+   it mounts: if the bundle fails or stalls, nothing is hidden and the page
+   reads as plain content.
    ------------------------------------------------------------------------- */
-[data-reveal-child] {
+.reveal-ready [data-reveal-child] {
   opacity: 0;
   transform: translateY(18px);
   transition:
