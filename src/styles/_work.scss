@@ -1,0 +1,283 @@
+.work { isolation: isolate; }
+
+/* ---- filter bar ---- */
+.work__filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin-bottom: clamp(1.6rem, 4vh, 2.6rem);
+}
+
+.work__filter {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55em;
+  padding: 0.6em 0.95em;
+  border: 1px solid var(--hair);
+  color: var(--mute);
+  background: rgba(8, 12, 19, 0.7);
+  transition: color var(--dur-fast), border-color var(--dur-fast), background var(--dur-fast);
+
+  &:hover:not(:disabled) {
+    color: var(--bone);
+    border-color: var(--hair-hot);
+  }
+
+  &.is-active {
+    color: var(--void);
+    background: var(--signal);
+    border-color: var(--signal);
+  }
+
+  &:disabled {
+    opacity: 0.32;
+    cursor: not-allowed;
+  }
+}
+
+.work__filter-count {
+  font-size: 0.58rem;
+  opacity: 0.7;
+  font-variant-numeric: tabular-nums;
+}
+
+/* ---- grid ---- */
+.work__grid {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: clamp(0.9rem, 1.6vw, 1.35rem);
+}
+
+/* ---- card ---- */
+.card {
+  position: relative;
+  grid-column: span 3;
+  display: flex;
+  flex-direction: column;
+  gap: 0.62rem;
+  padding: clamp(1.3rem, 2.2vw, 1.9rem);
+  background: linear-gradient(160deg, rgba(13, 20, 32, 0.86), rgba(8, 12, 19, 0.92));
+  border: 1px solid var(--hair);
+  overflow: hidden;
+  transition:
+    border-color var(--dur) var(--ease-out),
+    transform var(--dur) var(--ease-out),
+    box-shadow var(--dur) var(--ease-out);
+
+  &:hover {
+    border-color: var(--hair-hot);
+    transform: translateY(-3px);
+    box-shadow: var(--lift-2);
+  }
+
+  &:focus-within {
+    border-color: var(--signal);
+  }
+}
+
+.card--wide { grid-column: span 3; }
+
+/* Corner brackets, hidden until hover. */
+.card__corner {
+  position: absolute;
+  width: 0;
+  height: 0;
+  border: 1.5px solid var(--signal);
+  opacity: 0;
+  transition: all var(--dur) var(--ease-out);
+  pointer-events: none;
+
+  &.tl { top: 8px; left: 8px; border-right: 0; border-bottom: 0; }
+  &.tr { top: 8px; right: 8px; border-left: 0; border-bottom: 0; }
+  &.bl { bottom: 8px; left: 8px; border-right: 0; border-top: 0; }
+  &.br { bottom: 8px; right: 8px; border-left: 0; border-top: 0; }
+}
+
+.card--amber .card__corner { border-color: var(--amber); }
+
+.card:hover .card__corner,
+.card:focus-within .card__corner {
+  width: 16px;
+  height: 16px;
+  opacity: 0.9;
+}
+
+/* A scan sweep on hover. */
+.card__scan {
+  position: absolute;
+  inset-inline: 0;
+  top: 0;
+  height: 32%;
+  background: linear-gradient(to bottom, transparent, var(--signal-glow), transparent);
+  opacity: 0;
+  transform: translateY(-100%);
+  pointer-events: none;
+}
+
+.card:hover .card__scan {
+  opacity: 1;
+  animation: cardScan 1.5s var(--ease-in-out);
+}
+
+@keyframes cardScan {
+  0% { transform: translateY(-110%); }
+  100% { transform: translateY(340%); }
+}
+
+/* The whole card is clickable, but the hit target is a real button. */
+.card__hit {
+  position: absolute;
+  inset: 0;
+  z-index: 4;
+  opacity: 0;
+}
+
+.card > *:not(.card__hit) { position: relative; }
+
+.card__top {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  margin-bottom: 0.15rem;
+}
+
+.card__idx {
+  color: var(--mute-2);
+  font-size: var(--t-xs);
+}
+
+.card__award { margin-right: auto; }
+.card__top .card__idx + .card__year { margin-left: auto; }
+.card__year { color: var(--mute-2); }
+
+.card__title {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: clamp(1.55rem, 2.6vw, 2.1rem);
+  line-height: 1.02;
+  letter-spacing: -0.035em;
+  color: var(--bone);
+}
+
+.card__subtitle {
+  font-family: var(--font-prose);
+  font-size: 1rem;
+  font-style: italic;
+  color: var(--bone-2);
+  line-height: 1.34;
+}
+
+.card__org {
+  color: var(--mute);
+  font-size: var(--t-micro);
+}
+
+.card__summary {
+  font-size: 0.97rem;
+  color: var(--mute);
+  margin-top: 0.35rem;
+}
+
+.card__metrics {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(76px, 1fr));
+  gap: 0.9rem;
+  margin-top: auto;
+  padding-top: 1.1rem;
+  border-top: 1px solid var(--hair);
+
+  .metric__val { font-size: 1.02rem; }
+}
+
+.card--amber .metric__val { color: var(--amber); }
+
+.card__stack {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.3rem;
+  padding-top: 0.85rem;
+}
+
+.card__cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45em;
+  color: var(--mute-2);
+  padding-top: 0.5rem;
+  transition: color var(--dur-fast), gap var(--dur-fast);
+}
+
+.card:hover .card__cta {
+  color: var(--signal);
+  gap: 0.8em;
+}
+
+.card--amber:hover .card__cta { color: var(--amber); }
+
+/* ---- coursework list ---- */
+.work__more {
+  margin-top: clamp(2.6rem, 7vh, 4.5rem);
+  padding-top: 1.8rem;
+  border-top: 1px solid var(--hair);
+}
+
+.work__more-title {
+  color: var(--mute);
+  margin-bottom: 1rem;
+}
+
+.work__more-list {
+  display: grid;
+  gap: 1px;
+  background: var(--hair);
+  border: 1px solid var(--hair);
+
+  a {
+    display: grid;
+    grid-template-columns: minmax(180px, 0.9fr) minmax(0, 1.6fr) auto auto;
+    align-items: center;
+    gap: 1.2rem;
+    padding: 1rem 1.2rem;
+    background: var(--void-2);
+    transition: background var(--dur-fast), color var(--dur-fast);
+
+    &:hover {
+      background: var(--void-3);
+      .work__more-name { color: var(--signal); }
+    }
+  }
+}
+
+.work__more-name {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1rem;
+  letter-spacing: -0.015em;
+  color: var(--bone);
+  transition: color var(--dur-fast);
+}
+
+.work__more-note {
+  font-size: var(--t-sm);
+  color: var(--mute);
+}
+
+.work__more-stack { color: var(--mute-2); }
+
+@media (max-width: 1100px) {
+  .work__grid { grid-template-columns: repeat(4, 1fr); }
+  .card, .card--wide { grid-column: span 2; }
+}
+
+@media (max-width: 760px) {
+  .work__grid { grid-template-columns: 1fr; }
+  .card, .card--wide { grid-column: span 1; }
+  .work__more-list a {
+    grid-template-columns: 1fr auto;
+    grid-template-areas: 'name arrow' 'note note' 'stack stack';
+    gap: 0.35rem;
+  }
+  .work__more-name { grid-area: name; }
+  .work__more-note { grid-area: note; }
+  .work__more-stack { grid-area: stack; }
+}

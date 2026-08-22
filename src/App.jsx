@@ -4,6 +4,7 @@ import Preloader from './components/ui/Preloader.jsx'
 import Nav from './components/ui/Nav.jsx'
 import Hero from './sections/Hero.jsx'
 import About from './sections/About.jsx'
+import Work from './sections/Work.jsx'
 import useScrollProgress from './hooks/useScrollProgress.js'
 import usePointer from './hooks/usePointer.js'
 import { detectTier, prefersReducedMotion } from './utils/device.js'
@@ -38,6 +39,7 @@ export default function App() {
         <main id="main">
           <Hero />
           <About />
+          <Work />
         </main>
       </div>
     </>
