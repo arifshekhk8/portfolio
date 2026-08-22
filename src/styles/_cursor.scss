@@ -1,0 +1,80 @@
+/* Only hide the system cursor once the custom one is actually running. */
+.has-cursor,
+.has-cursor * { cursor: none !important; }
+
+.cursor {
+  position: fixed;
+  inset: 0;
+  z-index: var(--z-cursor);
+  pointer-events: none;
+}
+
+.cursor__dot,
+.cursor__ring {
+  position: absolute;
+  top: 0;
+  left: 0;
+  will-change: transform;
+  transition: opacity var(--dur-fast) var(--ease-out);
+}
+
+.cursor__dot {
+  width: 5px;
+  height: 5px;
+  margin: -2.5px 0 0 -2.5px;
+  border-radius: 50%;
+  background: var(--signal);
+  box-shadow: 0 0 8px var(--signal);
+}
+
+.cursor__ring {
+  width: 30px;
+  height: 30px;
+  transition:
+    width var(--dur) var(--ease-out),
+    height var(--dur) var(--ease-out),
+    opacity var(--dur-fast) var(--ease-out);
+
+  i {
+    position: absolute;
+    width: 7px;
+    height: 7px;
+    border: 1.2px solid var(--signal);
+    opacity: 0.55;
+    transition: all var(--dur) var(--ease-out);
+
+    &.tl { top: 0; left: 0; border-right: 0; border-bottom: 0; }
+    &.tr { top: 0; right: 0; border-left: 0; border-bottom: 0; }
+    &.bl { bottom: 0; left: 0; border-right: 0; border-top: 0; }
+    &.br { bottom: 0; right: 0; border-left: 0; border-top: 0; }
+  }
+
+  /* Over something interactive but too large to wrap. */
+  &[data-state='hot'] i {
+    width: 10px;
+    height: 10px;
+    opacity: 0.95;
+  }
+
+  /* Locked onto an element's box. */
+  &[data-state='lock'] i {
+    width: 14px;
+    height: 14px;
+    opacity: 1;
+    border-width: 1.6px;
+  }
+
+  &.is-down i {
+    width: 5px;
+    height: 5px;
+    border-color: var(--amber);
+  }
+}
+
+/* The dot shrinks while the ring is locked, so the reticle reads as one
+   thing rather than two. */
+.cursor__ring[data-state='lock'] ~ .cursor__dot { opacity: 0.4; }
+
+@media (pointer: coarse) {
+  .cursor { display: none; }
+}

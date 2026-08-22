@@ -2,6 +2,7 @@ import { useCallback, useEffect, useState } from 'react'
 import Experience from './components/canvas/Experience.jsx'
 import Preloader from './components/ui/Preloader.jsx'
 import Nav from './components/ui/Nav.jsx'
+import Cursor from './components/ui/Cursor.jsx'
 import Hero from './sections/Hero.jsx'
 import About from './sections/About.jsx'
 import Work from './sections/Work.jsx'
@@ -52,6 +53,8 @@ export default function App() {
         </main>
         <Footer />
       </div>
+
+      <Cursor />
     </>
   )
 }
