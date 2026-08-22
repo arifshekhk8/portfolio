@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://arifshekhk8.github.io/portfolio/sitemap.xml
