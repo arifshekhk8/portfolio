@@ -12,10 +12,13 @@ export default defineConfig({
     assetsInlineLimit: 2048,
     rollupOptions: {
       output: {
-        manualChunks: {
-          three: ['three'],
-          r3f: ['@react-three/fiber', '@react-three/drei', '@react-three/postprocessing'],
-          gsap: ['gsap'],
+        // Rolldown wants a function here, not the old object map.
+        manualChunks(id) {
+          if (!id.includes('node_modules')) return undefined
+          if (id.includes('/three/')) return 'three'
+          if (id.includes('@react-three') || id.includes('postprocessing')) return 'r3f'
+          if (id.includes('/gsap/') || id.includes('@gsap/')) return 'gsap'
+          return 'vendor'
         },
       },
     },

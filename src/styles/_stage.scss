@@ -1,0 +1,30 @@
+/* The WebGL layer sits behind everything, fixed, and never takes input. */
+.stage {
+  position: fixed;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background:
+    radial-gradient(ellipse 70% 50% at 50% 0%, rgba(79, 227, 176, 0.07), transparent 70%),
+    radial-gradient(ellipse 60% 40% at 82% 82%, rgba(240, 168, 60, 0.05), transparent 70%),
+    var(--void);
+}
+
+.stage__canvas {
+  position: absolute !important;
+  inset: 0;
+}
+
+/* Shown when detectTier() returns 'low': no canvas, just atmosphere. */
+.stage--static::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image:
+    radial-gradient(1px 1px at 20% 30%, rgba(79, 227, 176, 0.5), transparent),
+    radial-gradient(1px 1px at 68% 18%, rgba(240, 168, 60, 0.4), transparent),
+    radial-gradient(1px 1px at 44% 72%, rgba(79, 227, 176, 0.35), transparent),
+    radial-gradient(1px 1px at 82% 58%, rgba(232, 238, 244, 0.28), transparent);
+  background-size: 340px 340px;
+  opacity: 0.7;
+}
