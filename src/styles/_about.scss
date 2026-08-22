@@ -49,23 +49,27 @@
   top: 110px;
 }
 
-/* The backdrop is cut out of the source image, so the subject sits directly
-   on the scene. A teal wash underneath ties him to the palette and clears on
-   hover. */
+/* The backdrop is cut out of the source image, so the subject stands directly
+   on the scene. A teal wash pools at his feet and clears on hover. */
+/* The standing figure is a 0.6 portrait. Left to fill the column it renders
+   nearly 800px tall and shoves the education record off the screen, so the
+   frame is capped and pinned to the right of its column. */
 .about__photo {
+  width: min(100%, 340px);
+  margin-inline-start: auto;
   padding: 12px;
   background:
-    radial-gradient(ellipse 78% 62% at 50% 96%, rgba(79, 227, 176, 0.13), transparent 70%),
-    linear-gradient(to bottom, rgba(13, 20, 32, 0.35), rgba(5, 7, 11, 0.75));
+    radial-gradient(ellipse 72% 46% at 50% 100%, rgba(79, 227, 176, 0.15), transparent 72%),
+    linear-gradient(to bottom, rgba(13, 20, 32, 0.28), rgba(5, 7, 11, 0.7));
 
   img {
     width: 100%;
     height: auto;
     filter: grayscale(0.86) contrast(1.06) brightness(0.94);
     transition: filter var(--dur-slow) var(--ease-out);
-    /* The crop ends at the shoulders. Without this the suit stops on a hard
-       horizontal edge; the fade lets him dissolve into the scene instead. */
-    mask-image: linear-gradient(to bottom, #000 72%, rgba(0, 0, 0, 0.35) 90%, transparent 100%);
+    /* The crop ends mid-thigh. Without this he stops on a hard horizontal
+       edge; the fade lets him dissolve into the scene instead. */
+    mask-image: linear-gradient(to bottom, #000 80%, rgba(0, 0, 0, 0.4) 93%, transparent 100%);
   }
 
   &:hover img {
@@ -118,5 +122,10 @@
     flex-direction: column-reverse;
     gap: 2rem;
   }
-  .about__photo { max-width: 300px; }
+  /* Left-aligned with the text once the columns stack; the auto start
+     margin only makes sense while the photo sits in its own column. */
+  .about__photo {
+    width: min(100%, 260px);
+    margin-inline-start: 0;
+  }
 }

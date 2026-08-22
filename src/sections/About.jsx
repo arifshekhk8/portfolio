@@ -35,12 +35,12 @@ export default function About() {
           <div className="about__side">
             <DetectionBox className="about__photo" label="arif_shekh" conf="1.00">
               <img
-                src={`${BASE}arif-headshot.webp`}
-                srcSet={`${BASE}arif-headshot-sm.webp 460w, ${BASE}arif-headshot.webp 900w`}
-                sizes="(max-width: 900px) 60vw, 340px"
+                src={`${BASE}arif-portrait.webp`}
+                srcSet={`${BASE}arif-portrait-sm.webp 300w, ${BASE}arif-portrait.webp 539w`}
+                sizes="(max-width: 900px) 58vw, 340px"
                 alt="Md. Arif Shekh"
-                width="2778"
-                height="2983"
+                width="539"
+                height="903"
                 loading="lazy"
                 decoding="async"
               />
