@@ -1,0 +1,154 @@
+.journey { isolation: isolate; }
+
+.track {
+  display: grid;
+  gap: 0;
+}
+
+.track__item {
+  display: grid;
+  grid-template-columns: 128px 34px minmax(0, 1fr);
+  gap: 0 1.4rem;
+  padding-block: clamp(1rem, 2.4vh, 1.5rem);
+
+  &:hover {
+    .track__node {
+      transform: scale(1.9);
+      background: var(--signal);
+    }
+    .track__title { color: var(--signal); }
+  }
+}
+
+/* Award and paper rows get amber so the timeline has texture. */
+.track__item--award,
+.track__item--paper {
+  &:hover {
+    .track__node { background: var(--amber); }
+    .track__title { color: var(--amber); }
+  }
+  .track__stamp {
+    color: var(--amber);
+    border-color: rgba(240, 168, 60, 0.3);
+    background: rgba(240, 168, 60, 0.08);
+  }
+  .track__node { border-color: var(--amber); }
+}
+
+.track__item--next {
+  .track__stamp {
+    color: var(--void);
+    background: var(--signal);
+    border-color: var(--signal);
+  }
+  .track__node {
+    background: var(--signal);
+    animation: heroPulse 2.4s var(--ease-out) infinite;
+  }
+}
+
+/* ---- the rail ---- */
+.track__rail {
+  grid-column: 2;
+  position: relative;
+  display: flex;
+  justify-content: center;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: -1.5rem;
+    bottom: -1.5rem;
+    width: 1px;
+    background: var(--hair-hot);
+  }
+}
+
+.track__item:first-child .track__rail::before { top: 0.55rem; }
+.track__item:last-child .track__rail::before { bottom: calc(100% - 0.55rem); }
+
+.track__node {
+  position: relative;
+  z-index: 1;
+  width: 7px;
+  height: 7px;
+  margin-top: 0.42rem;
+  border-radius: 50%;
+  border: 1px solid var(--signal-deep);
+  background: var(--void);
+  transition: transform var(--dur) var(--ease-out), background var(--dur) var(--ease-out);
+}
+
+/* ---- meta column ---- */
+.track__meta {
+  grid-column: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 0.4rem;
+  text-align: right;
+  padding-top: 0.1rem;
+}
+
+.track__date {
+  color: var(--bone-2);
+  font-size: var(--t-xs);
+  letter-spacing: 0.1em;
+}
+
+.track__stamp {
+  padding: 0.2em 0.5em;
+  font-size: 0.58rem;
+  letter-spacing: 0.14em;
+  color: var(--signal);
+  border: 1px solid var(--hair-signal);
+  background: var(--signal-glow);
+}
+
+/* ---- body ---- */
+.track__body {
+  grid-column: 3;
+  display: grid;
+  gap: 0.22rem;
+  padding-bottom: 0.2rem;
+}
+
+.track__title {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(1.05rem, 1.9vw, 1.32rem);
+  letter-spacing: -0.025em;
+  line-height: 1.18;
+  color: var(--bone);
+  transition: color var(--dur-fast);
+}
+
+.track__org {
+  color: var(--mute);
+  font-size: var(--t-micro);
+}
+
+.track__note {
+  font-size: 0.97rem;
+  color: var(--mute);
+  max-width: 68ch;
+  margin-top: 0.18rem;
+}
+
+@media (max-width: 760px) {
+  .track__item {
+    grid-template-columns: 26px minmax(0, 1fr);
+    gap: 0 1rem;
+  }
+  .track__rail { grid-column: 1; grid-row: 1 / span 2; justify-content: flex-start; }
+  .track__meta {
+    grid-column: 2;
+    grid-row: 1;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    text-align: left;
+    margin-bottom: 0.3rem;
+  }
+  .track__body { grid-column: 2; grid-row: 2; }
+}
