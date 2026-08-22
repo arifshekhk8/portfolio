@@ -12,11 +12,14 @@ export default function Hero() {
     <section className="hero" id="top">
       <div className="scrim" aria-hidden="true" />
       <div className="wrap hero__grid">
+        {/* Each part is its own element: bare text nodes here collapse into a
+            single anonymous flex item, which loses the gap and lets the phrase
+            break mid-sentence on narrow screens. */}
         <p className="hero__eyebrow mono">
           <span className="hero__pulse" aria-hidden="true" />
-          {profile.location}
+          <span className="hero__where">{profile.location}</span>
           <span className="hero__sep" aria-hidden="true">/</span>
-          {profile.status}
+          <span className="hero__status">{profile.status}</span>
         </p>
 
         <DetectionBox

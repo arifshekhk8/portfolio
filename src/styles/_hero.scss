@@ -7,10 +7,16 @@
   padding-block: clamp(6rem, 14vh, 9rem) clamp(5rem, 12vh, 7rem);
 }
 
+/* minmax(0, 1fr) is load-bearing. With an implicit auto track, justify-items:
+   start sizes children to max-content, and the eyebrow and stat row then push
+   the whole grid past the viewport on narrow screens. */
 .hero__grid {
   display: grid;
+  grid-template-columns: minmax(0, 1fr);
   gap: clamp(1.1rem, 2.4vh, 1.9rem);
   justify-items: start;
+
+  > * { max-width: 100%; }
 }
 
 /* ---- eyebrow ---- */
@@ -168,4 +174,41 @@
 @media (max-width: 720px) {
   .hero__scroll { display: none; }
   .hero__name { font-variation-settings: 'wdth' 95, 'opsz' 72; }
+
+  /* Stack onto two lines rather than letting a long status wrap awkwardly
+     against the location. */
+  .hero__eyebrow {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
+    gap: 0.2rem 0.6rem;
+    line-height: 1.6;
+  }
+
+  .hero__where { grid-column: 2; }
+
+  .hero__status {
+    grid-column: 2;
+    color: var(--signal);
+  }
+
+  .hero__pulse { grid-row: 1; margin-top: 0.35em; }
+  .hero__sep { display: none; }
+
+  .hero__stats {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1.1rem;
+  }
+
+  /* Two per row, so the third wraps instead of squeezing three into a
+     460px line. */
+  .hero__cta {
+    gap: 0.5rem;
+    width: 100%;
+  }
+
+  .hero__cta .btn {
+    flex: 1 1 calc(50% - 0.25rem);
+    justify-content: center;
+    padding-inline: 1rem;
+  }
 }
