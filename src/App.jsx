@@ -3,6 +3,7 @@ import Experience from './components/canvas/Experience.jsx'
 import Preloader from './components/ui/Preloader.jsx'
 import Nav from './components/ui/Nav.jsx'
 import Hero from './sections/Hero.jsx'
+import About from './sections/About.jsx'
 import useScrollProgress from './hooks/useScrollProgress.js'
 import usePointer from './hooks/usePointer.js'
 import { detectTier, prefersReducedMotion } from './utils/device.js'
@@ -36,6 +37,7 @@ export default function App() {
         <Nav scrollRef={scrollRef} />
         <main id="main">
           <Hero />
+          <About />
         </main>
       </div>
     </>

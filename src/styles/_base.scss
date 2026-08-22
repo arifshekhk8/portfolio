@@ -114,3 +114,20 @@ body.is-locked { overflow: hidden; }
 
   &:focus { top: 1rem; }
 }
+
+/* -------------------------------------------------------------------------
+   Reveal on scroll. Sections start slightly low and faded; useReveal adds
+   .is-in once they cross into view and staggers any [data-reveal-child].
+   ------------------------------------------------------------------------- */
+[data-reveal-child] {
+  opacity: 0;
+  transform: translateY(18px);
+  transition:
+    opacity var(--dur-slow) var(--ease-out),
+    transform var(--dur-slow) var(--ease-out);
+
+  &.is-in {
+    opacity: 1;
+    transform: none;
+  }
+}
