@@ -1,5 +1,4 @@
-import { useCallback, useEffect, useState } from 'react'
-import Experience from './components/canvas/Experience.jsx'
+import { lazy, Suspense, useCallback, useEffect, useState } from 'react'
 import Preloader from './components/ui/Preloader.jsx'
 import Nav from './components/ui/Nav.jsx'
 import Cursor from './components/ui/Cursor.jsx'
@@ -14,6 +13,10 @@ import Footer from './sections/Footer.jsx'
 import useScrollProgress from './hooks/useScrollProgress.js'
 import usePointer from './hooks/usePointer.js'
 import { detectTier, prefersReducedMotion } from './utils/device.js'
+
+// three.js and R3F are most of the bundle. Keeping them out of the entry
+// chunk lets the text render while the scene is still downloading.
+const Experience = lazy(() => import('./components/canvas/Experience.jsx'))
 
 export default function App() {
   const [tier, setTier] = useState('mid')
@@ -32,7 +35,11 @@ export default function App() {
       {!booted && <Preloader onDone={onBooted} />}
 
       <div className={`stage${tier === 'low' ? ' stage--static' : ''}`}>
-        <Experience tier={tier} scrollRef={scrollRef} pointerRef={pointerRef} />
+        {tier !== 'low' && (
+          <Suspense fallback={null}>
+            <Experience tier={tier} scrollRef={scrollRef} pointerRef={pointerRef} />
+          </Suspense>
+        )}
       </div>
 
       <div className="plate plate--grid" aria-hidden="true" />

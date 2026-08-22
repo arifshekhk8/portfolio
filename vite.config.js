@@ -10,14 +10,25 @@ export default defineConfig({
   build: {
     outDir: 'dist',
     assetsInlineLimit: 2048,
+    // The three.js chunk is large and unavoidable, but it is loaded lazily
+    // after first paint, so the default 500kB warning is noise here.
+    chunkSizeWarningLimit: 1100,
     rollupOptions: {
       output: {
-        // Rolldown wants a function here, not the old object map.
+        // Rolldown wants a function here, not the old object map. It merges
+        // chunks that are only ever reachable together, so three, fiber and
+        // postprocessing end up as one 'three' chunk regardless of how finely
+        // they are split here. That chunk is behind a dynamic import, so it
+        // never blocks first paint.
         manualChunks(id) {
           if (!id.includes('node_modules')) return undefined
-          if (id.includes('/three/')) return 'three'
-          if (id.includes('@react-three') || id.includes('postprocessing')) return 'r3f'
-          if (id.includes('/gsap/') || id.includes('@gsap/')) return 'gsap'
+          if (
+            id.includes('/three/') ||
+            id.includes('@react-three') ||
+            id.includes('/postprocessing/')
+          ) {
+            return 'three'
+          }
           return 'vendor'
         },
       },

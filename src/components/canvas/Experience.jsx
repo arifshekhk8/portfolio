@@ -1,10 +1,11 @@
-import { Suspense, useRef } from 'react'
+import { lazy, Suspense, useEffect, useRef, useState } from 'react'
 import { Canvas, useFrame, useThree } from '@react-three/fiber'
-import { EffectComposer, Bloom, Vignette } from '@react-three/postprocessing'
 import * as THREE from 'three'
 import NeuralField from './NeuralField.jsx'
 import ScanGrid from './ScanGrid.jsx'
 import { tierSettings } from '../../utils/device.js'
+
+const Effects = lazy(() => import('./Effects.jsx'))
 
 /** Camera drifts on the pointer and banks slightly as the page scrolls. */
 function CameraRig({ scrollRef, pointerRef }) {
@@ -33,11 +34,21 @@ function CameraRig({ scrollRef, pointerRef }) {
 
 export default function Experience({ tier = 'high', scrollRef, pointerRef }) {
   const cfg = tierSettings[tier] ?? tierSettings.mid
+  const [visible, setVisible] = useState(true)
+
+  // Stop rendering entirely while the tab is in the background.
+  useEffect(() => {
+    const onVis = () => setVisible(!document.hidden)
+    document.addEventListener('visibilitychange', onVis)
+    return () => document.removeEventListener('visibilitychange', onVis)
+  }, [])
+
   if (cfg.particles === 0) return null
 
   return (
     <Canvas
       className="stage__canvas"
+      frameloop={visible ? 'always' : 'never'}
       dpr={cfg.dpr}
       gl={{
         antialias: false,
@@ -55,12 +66,7 @@ export default function Experience({ tier = 'high', scrollRef, pointerRef }) {
         <CameraRig scrollRef={scrollRef} pointerRef={pointerRef} />
         <NeuralField count={cfg.particles} scrollRef={scrollRef} pointerRef={pointerRef} />
         <ScanGrid scrollRef={scrollRef} opacity={tier === 'high' ? 0.52 : 0.3} />
-        {cfg.bloom && (
-          <EffectComposer enableNormalPass={false}>
-            <Bloom intensity={0.5} luminanceThreshold={0.3} luminanceSmoothing={0.5} mipmapBlur />
-            <Vignette eskil={false} offset={0.22} darkness={0.72} />
-          </EffectComposer>
-        )}
+        {cfg.bloom && <Effects />}
       </Suspense>
     </Canvas>
   )
