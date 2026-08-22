@@ -8,6 +8,8 @@ import Work from './sections/Work.jsx'
 import Journey from './sections/Journey.jsx'
 import Skills from './sections/Skills.jsx'
 import Awards from './sections/Awards.jsx'
+import Contact from './sections/Contact.jsx'
+import Footer from './sections/Footer.jsx'
 import useScrollProgress from './hooks/useScrollProgress.js'
 import usePointer from './hooks/usePointer.js'
 import { detectTier, prefersReducedMotion } from './utils/device.js'
@@ -46,7 +48,9 @@ export default function App() {
           <Journey />
           <Skills />
           <Awards />
+          <Contact />
         </main>
+        <Footer />
       </div>
     </>
   )
