@@ -39,8 +39,8 @@ export default function About() {
                 srcSet={`${BASE}arif-headshot-sm.webp 460w, ${BASE}arif-headshot.webp 900w`}
                 sizes="(max-width: 900px) 60vw, 340px"
                 alt="Md. Arif Shekh"
-                width="900"
-                height="1125"
+                width="2778"
+                height="2983"
                 loading="lazy"
                 decoding="async"
               />

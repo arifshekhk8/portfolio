@@ -49,19 +49,27 @@
   top: 110px;
 }
 
+/* The backdrop is cut out of the source image, so the subject sits directly
+   on the scene. A teal wash underneath ties him to the palette and clears on
+   hover. */
 .about__photo {
-  padding: 10px;
+  padding: 12px;
+  background:
+    radial-gradient(ellipse 78% 62% at 50% 96%, rgba(79, 227, 176, 0.13), transparent 70%),
+    linear-gradient(to bottom, rgba(13, 20, 32, 0.35), rgba(5, 7, 11, 0.75));
 
   img {
     width: 100%;
     height: auto;
-    filter: grayscale(1) contrast(1.08) brightness(0.92);
-    mix-blend-mode: luminosity;
+    filter: grayscale(0.86) contrast(1.06) brightness(0.94);
     transition: filter var(--dur-slow) var(--ease-out);
+    /* The crop ends at the shoulders. Without this the suit stops on a hard
+       horizontal edge; the fade lets him dissolve into the scene instead. */
+    mask-image: linear-gradient(to bottom, #000 72%, rgba(0, 0, 0, 0.35) 90%, transparent 100%);
   }
 
   &:hover img {
-    filter: grayscale(0.15) contrast(1.02) brightness(1);
+    filter: grayscale(0) contrast(1) brightness(1);
   }
 }
 
