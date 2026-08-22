@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useState } from 'react'
 import Experience from './components/canvas/Experience.jsx'
 import Preloader from './components/ui/Preloader.jsx'
+import Hero from './sections/Hero.jsx'
 import useScrollProgress from './hooks/useScrollProgress.js'
 import usePointer from './hooks/usePointer.js'
 import { detectTier, prefersReducedMotion } from './utils/device.js'
@@ -31,7 +32,9 @@ export default function App() {
 
       <div className={`shell${booted ? ' is-booted' : ''}`}>
         <a className="skip-link" href="#main">Skip to content</a>
-        <main id="main" style={{ minHeight: '400vh' }} />
+        <main id="main">
+          <Hero />
+        </main>
       </div>
     </>
   )
