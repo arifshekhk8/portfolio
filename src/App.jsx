@@ -6,6 +6,7 @@ import Hero from './sections/Hero.jsx'
 import About from './sections/About.jsx'
 import Work from './sections/Work.jsx'
 import Journey from './sections/Journey.jsx'
+import Skills from './sections/Skills.jsx'
 import useScrollProgress from './hooks/useScrollProgress.js'
 import usePointer from './hooks/usePointer.js'
 import { detectTier, prefersReducedMotion } from './utils/device.js'
@@ -42,6 +43,7 @@ export default function App() {
           <About />
           <Work />
           <Journey />
+          <Skills />
         </main>
       </div>
     </>

@@ -1,0 +1,122 @@
+.skills { isolation: isolate; }
+
+.skills__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 1px;
+  background: var(--hair);
+  border: 1px solid var(--hair);
+}
+
+.bank {
+  display: flex;
+  flex-direction: column;
+  gap: 1.1rem;
+  padding: clamp(1.3rem, 2.4vw, 1.8rem);
+  background: rgba(8, 12, 19, 0.86);
+  transition: background var(--dur) var(--ease-out);
+
+  &:hover { background: rgba(13, 20, 32, 0.9); }
+}
+
+.bank__head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1rem;
+  padding-bottom: 0.85rem;
+  border-bottom: 1px solid var(--hair);
+}
+
+.bank__title {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1.12rem;
+  letter-spacing: -0.02em;
+  color: var(--bone);
+}
+
+.bank__note { color: var(--mute-2); }
+
+.bank__list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+}
+
+/* ---- segmented level meter ---- */
+.gauge {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  grid-template-areas: 'name val' 'meter meter';
+  gap: 0.4rem 0.8rem;
+  align-items: center;
+}
+
+.gauge__name {
+  grid-area: name;
+  font-size: var(--t-sm);
+  color: var(--bone-2);
+}
+
+.gauge__val {
+  grid-area: val;
+  color: var(--mute);
+  font-variant-numeric: tabular-nums;
+}
+
+.gauge__meter {
+  grid-area: meter;
+  display: flex;
+  gap: 2px;
+  height: 8px;
+
+  i {
+    flex: 1;
+    background: var(--void-4);
+    transform: scaleY(0.45);
+    transform-origin: bottom;
+    transition:
+      background var(--dur) var(--ease-out),
+      transform var(--dur) var(--ease-out);
+  }
+}
+
+/* Segments only light once the group has been revealed. */
+[data-reveal-child].is-in .gauge__meter i.is-lit {
+  background: var(--signal);
+  transform: scaleY(1);
+}
+
+.bank:hover .gauge__meter i.is-lit {
+  box-shadow: 0 0 6px var(--signal-glow);
+}
+
+/* Every fifth segment stays dim so the meter reads like a scale. */
+.gauge__meter i:nth-child(5n).is-lit { background: var(--signal-deep); }
+
+/* ---- tail ---- */
+.skills__tail {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: clamp(1.6rem, 4vw, 3rem);
+  margin-top: clamp(2rem, 5vh, 3rem);
+}
+
+.skills__tail-title {
+  color: var(--mute);
+  margin-bottom: 0.9rem;
+}
+
+.skills__chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+
+  .chip {
+    padding: 0.5em 0.8em;
+    font-size: var(--t-xs);
+    letter-spacing: 0.04em;
+    text-transform: none;
+  }
+}
