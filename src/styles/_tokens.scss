@@ -1,0 +1,77 @@
+/* =========================================================================
+   Design tokens — "machine-vision telemetry"
+   A detector's debug overlay: near-black navy void, mint-teal signal for
+   confident predictions, amber for measured values, bone for prose.
+   ========================================================================= */
+
+:root {
+  /* ---- surfaces ---- */
+  --void: #05070b;
+  --void-2: #080c13;
+  --void-3: #0d1420;
+  --void-4: #121b29;
+
+  /* ---- hairlines & borders ---- */
+  --hair: #17222f;
+  --hair-hot: #22374a;
+  --hair-signal: rgba(79, 227, 176, 0.22);
+
+  /* ---- signal colours ---- */
+  --signal: #4fe3b0;
+  --signal-deep: #1f9e7a;
+  --signal-glow: rgba(79, 227, 176, 0.14);
+  --amber: #f0a83c;
+  --amber-deep: #b97c1d;
+  --rose: #ff6b6b;
+
+  /* ---- type colours ---- */
+  --bone: #e8eef4;
+  --bone-2: #a9b9c8;
+  --mute: #61748a;
+  --mute-2: #3f4f60;
+
+  /* ---- typefaces ---- */
+  --font-display: 'Bricolage Grotesque', 'Helvetica Neue', sans-serif;
+  --font-prose: 'Newsreader', Georgia, 'Times New Roman', serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, monospace;
+
+  /* ---- fluid type scale ---- */
+  --t-hero: clamp(2.85rem, 11vw, 9.5rem);
+  --t-xxl: clamp(2.2rem, 6.2vw, 5rem);
+  --t-xl: clamp(1.75rem, 3.6vw, 2.9rem);
+  --t-lg: clamp(1.25rem, 2.1vw, 1.6rem);
+  --t-md: 1.0625rem;
+  --t-sm: 0.875rem;
+  --t-xs: 0.75rem;
+  --t-micro: 0.6875rem;
+
+  /* ---- rhythm ---- */
+  --gut: clamp(1.25rem, 4vw, 3rem);
+  --stack: clamp(4.5rem, 11vh, 9rem);
+  --maxw: 1320px;
+  --rail: 84px;
+
+  /* ---- motion ---- */
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+  --dur-fast: 220ms;
+  --dur: 480ms;
+  --dur-slow: 900ms;
+
+  /* ---- depth ---- */
+  --lift-1: 0 1px 0 rgba(255, 255, 255, 0.03) inset, 0 8px 26px rgba(0, 0, 0, 0.5);
+  --lift-2: 0 1px 0 rgba(255, 255, 255, 0.05) inset, 0 22px 60px rgba(0, 0, 0, 0.62);
+  --z-nav: 60;
+  --z-cursor: 90;
+  --z-modal: 80;
+  --z-preloader: 100;
+}
+
+/* Respect the OS setting rather than shipping a theme toggle nobody asks for. */
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --dur-fast: 1ms;
+    --dur: 1ms;
+    --dur-slow: 1ms;
+  }
+}

@@ -1,0 +1,206 @@
+/* =========================================================================
+   The detection box
+   Every meaningful element on this site gets framed the way an object
+   detector frames what it has found: four corner brackets and a class label
+   carrying a confidence score. It is the one motif that repeats everywhere.
+   ========================================================================= */
+
+.det {
+  position: relative;
+  display: block;
+}
+
+.det__corner {
+  position: absolute;
+  width: 13px;
+  height: 13px;
+  border: 1.5px solid var(--signal);
+  opacity: 0.75;
+  transition: all var(--dur) var(--ease-out);
+  pointer-events: none;
+
+  &.tl { top: 0; left: 0; border-right: 0; border-bottom: 0; }
+  &.tr { top: 0; right: 0; border-left: 0; border-bottom: 0; }
+  &.bl { bottom: 0; left: 0; border-right: 0; border-top: 0; }
+  &.br { bottom: 0; right: 0; border-left: 0; border-top: 0; }
+}
+
+.det--amber .det__corner { border-color: var(--amber); }
+
+.det:hover .det__corner,
+.det.is-locked .det__corner {
+  width: 20px;
+  height: 20px;
+  opacity: 1;
+}
+
+.det__label {
+  position: absolute;
+  top: 0;
+  left: 0;
+  transform: translateY(-100%);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5em;
+  padding: 0.24em 0.6em;
+  background: var(--signal);
+  color: var(--void);
+  font-family: var(--font-mono);
+  font-size: var(--t-micro);
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  white-space: nowrap;
+  pointer-events: none;
+}
+
+.det--amber .det__label { background: var(--amber); }
+
+.det__conf {
+  font-variant-numeric: tabular-nums;
+  opacity: 0.72;
+}
+
+/* ---- section headers ---- */
+.head {
+  display: flex;
+  align-items: baseline;
+  gap: clamp(0.75rem, 2vw, 1.5rem);
+  margin-bottom: clamp(2rem, 5vh, 3.5rem);
+  flex-wrap: wrap;
+}
+
+.head__idx {
+  font-family: var(--font-mono);
+  font-size: var(--t-xs);
+  color: var(--signal);
+  letter-spacing: 0.2em;
+  font-weight: 600;
+}
+
+.head__title {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: var(--t-xxl);
+  line-height: 0.94;
+  letter-spacing: -0.035em;
+  color: var(--bone);
+}
+
+.head__rule {
+  flex: 1 1 120px;
+  height: 1px;
+  background: linear-gradient(to right, var(--hair-hot), transparent);
+  transform: translateY(-0.35em);
+}
+
+.head__note {
+  font-family: var(--font-mono);
+  font-size: var(--t-micro);
+  color: var(--mute);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+/* ---- buttons ---- */
+.btn {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.7em;
+  padding: 0.92em 1.5em;
+  font-family: var(--font-mono);
+  font-size: var(--t-xs);
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  border: 1px solid var(--hair-hot);
+  color: var(--bone);
+  background: var(--void-2);
+  overflow: hidden;
+  transition: color var(--dur-fast) var(--ease-out), border-color var(--dur-fast) var(--ease-out);
+
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: var(--signal);
+    transform: translateY(101%);
+    transition: transform var(--dur) var(--ease-out);
+    z-index: -1;
+  }
+
+  > * { position: relative; z-index: 1; }
+
+  &:hover {
+    color: var(--void);
+    border-color: var(--signal);
+    &::before { transform: translateY(0); }
+  }
+}
+
+.btn--ghost {
+  background: transparent;
+  color: var(--bone-2);
+
+  &:hover { color: var(--void); }
+}
+
+.btn--signal {
+  background: var(--signal);
+  border-color: var(--signal);
+  color: var(--void);
+
+  &::before { background: var(--bone); }
+  &:hover { color: var(--void); border-color: var(--bone); }
+}
+
+/* ---- chips ---- */
+.chip {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.34em 0.66em;
+  border: 1px solid var(--hair-hot);
+  font-family: var(--font-mono);
+  font-size: var(--t-micro);
+  letter-spacing: 0.08em;
+  color: var(--mute);
+  background: rgba(13, 20, 32, 0.6);
+  white-space: nowrap;
+  transition: color var(--dur-fast), border-color var(--dur-fast);
+}
+
+.chip--signal {
+  color: var(--signal);
+  border-color: var(--hair-signal);
+  background: var(--signal-glow);
+}
+
+.chip--amber {
+  color: var(--amber);
+  border-color: rgba(240, 168, 60, 0.28);
+  background: rgba(240, 168, 60, 0.08);
+}
+
+/* ---- a metric readout, the way a training log prints one ---- */
+.metric {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+.metric__val {
+  font-family: var(--font-mono);
+  font-size: clamp(1.1rem, 2.2vw, 1.6rem);
+  font-weight: 700;
+  color: var(--signal);
+  font-variant-numeric: tabular-nums;
+  line-height: 1;
+}
+
+.metric__key {
+  font-family: var(--font-mono);
+  font-size: var(--t-micro);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--mute);
+}

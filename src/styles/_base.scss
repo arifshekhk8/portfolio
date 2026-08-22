@@ -1,0 +1,116 @@
+body {
+  background: var(--void);
+  color: var(--bone-2);
+  font-family: var(--font-prose);
+  font-size: var(--t-md);
+  line-height: 1.68;
+  font-optical-sizing: auto;
+  overflow-x: hidden;
+}
+
+body.is-locked { overflow: hidden; }
+
+/* -------------------------------------------------------------------------
+   Atmosphere: a fixed grain plate and a faint scan grid sit above the page
+   background and below the content, so every surface reads as a screen
+   rather than a sheet of paper.
+   ------------------------------------------------------------------------- */
+.plate {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 2;
+}
+
+.plate--grain {
+  opacity: 0.045;
+  mix-blend-mode: screen;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+.plate--grid {
+  opacity: 0.5;
+  background-image:
+    linear-gradient(to right, var(--hair) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--hair) 1px, transparent 1px);
+  background-size: 96px 96px;
+  mask-image: radial-gradient(ellipse 90% 70% at 50% 40%, #000 20%, transparent 78%);
+}
+
+.plate--vignette {
+  background: radial-gradient(ellipse 120% 90% at 50% 50%, transparent 42%, rgba(0, 0, 0, 0.72) 100%);
+}
+
+/* ---- layout primitives ---- */
+.shell {
+  position: relative;
+  z-index: 3;
+}
+
+.wrap {
+  width: 100%;
+  max-width: var(--maxw);
+  margin-inline: auto;
+  padding-inline: var(--gut);
+}
+
+.section {
+  position: relative;
+  padding-block: var(--stack);
+}
+
+/* ---- typography primitives ---- */
+.display {
+  font-family: var(--font-display);
+  font-weight: 800;
+  line-height: 0.92;
+  letter-spacing: -0.035em;
+  color: var(--bone);
+  font-variation-settings: 'wdth' 100, 'opsz' 48;
+}
+
+.mono {
+  font-family: var(--font-mono);
+  font-size: var(--t-micro);
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  font-weight: 500;
+}
+
+.prose {
+  font-family: var(--font-prose);
+  color: var(--bone-2);
+  line-height: 1.72;
+  max-width: 62ch;
+}
+
+.prose strong {
+  color: var(--bone);
+  font-weight: 600;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+.skip-link {
+  position: absolute;
+  top: -100px;
+  left: var(--gut);
+  z-index: 200;
+  padding: 0.75rem 1.25rem;
+  background: var(--signal);
+  color: var(--void);
+  font-family: var(--font-mono);
+  font-size: var(--t-xs);
+  transition: top var(--dur-fast) var(--ease-out);
+
+  &:focus { top: 1rem; }
+}
